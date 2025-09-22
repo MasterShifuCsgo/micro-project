@@ -1,6 +1,6 @@
-import sqlite from "better-sqlite3";
+import Database from "better-sqlite3";
 
-const database = new sqlite.Database("./database.db");
+const database = new Database("/database.db", { verbose: console.log() });
 
 function exportDatabase() {
 
@@ -13,7 +13,7 @@ function exportDatabase() {
     );
     `)
 
-  return db;
+  return database;
 }
 
 const db = exportDatabase();
