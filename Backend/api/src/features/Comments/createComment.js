@@ -17,7 +17,9 @@ export default function createComment(req, res) {
 
 
   const { nimi, kommentaar, hinnang } = tunni_nimetus;
-  
+
+  //MUST CHECK IF THE NAME IS IN THE /shared/lessons.json . follow the System architecture
+
   try {
     //create the post
     const stmt = db.prepare(`INSERT INTO kommentaar 

@@ -1,8 +1,11 @@
 import db from "../../../../database/src/db.js";
 
 
-export default function getComment(req, res) {
+export default function getComment(req, res) {    
   const nimi = req.query.nimi;
+
+  //MUST CHECK IF THE NAME IS IN THE /shared/lessons.json . follow the System architecture
+  
 
   //type check the object
   if(typeof nimi !== "string"){

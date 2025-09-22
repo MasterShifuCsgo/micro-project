@@ -25,9 +25,17 @@ CREATE TABLE kommentaar (
 - `CHECK` välistab vigased hinnangud.
 - Tulevikus saab lisada eraldi `tund` ja `kasutaja` tabelid.
 
+
 ---
 
-#### **3. Põhiandmevood**
+#### **Arhitektuur**
+
+- shared/lessons.json failis on kirjas kõik tunnid, mida API kasutab, et leida ja tekitada kommentaare.
+
+
+---
+
+#### **Põhiandmevood**
 
 - **GET `/comments?tunni_nimi=Matemaatika`** – toob kõik konkreetse tunni kommentaarid.
 - **POST `/comments`** – lisab uue kommentaari.
@@ -36,8 +44,9 @@ CREATE TABLE kommentaar (
 
 ---
 
-#### **4. Kasutaja teekond**
+#### **Kasutaja teekond**
 
 1. Kasutaja valib õppekavast aine → näeb selle tunde.
 2. Tunni valimisel kuvatakse kommentaarid ja hinnangud.
 3. Kasutaja saab lisada uue kommentaari.
+
