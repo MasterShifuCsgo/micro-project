@@ -1,9 +1,8 @@
-import Database from "better-sqlite3";
+import Database from 'better-sqlite3'
 
-const database = new Database("./database.db", { verbose: console.log() });
+const database = new Database('./database.db', { verbose: console.log() })
 
 function exportDatabase() {
-
   database.exec(`
     CREATE TABLE IF NOT EXISTS kommentaar (
       id INTEGER PRIMARY KEY,
@@ -13,14 +12,8 @@ function exportDatabase() {
     );
     `)
 
-  return database;
+  return database
 }
 
-const db = exportDatabase();
-export default db;
-
-
-
-
-
-
+const db = exportDatabase()
+export default db

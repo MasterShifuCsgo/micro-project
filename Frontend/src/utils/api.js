@@ -1,15 +1,15 @@
-import axios from "axios";
+import axios from 'axios'
 
-
-/** 
+/**
  * @returns {import("axios").AxiosInstance}
  */
 export default function api() {
+  console.log(import.meta.env.VITE_BASE_API_URI)
   return axios.create({
-    baseURL: process.env.VITE_BASE_API_URI || "http://localhost:3000",
+    baseURL: import.meta.env.VITE_BASE_API_URI || 'http://localhost:3000',
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
-    timeout: 5000 // optional: auto-cancel requests after 5s
-  });
+    timeout: 5000, // optional: auto-cancel requests after 5s
+  })
 }

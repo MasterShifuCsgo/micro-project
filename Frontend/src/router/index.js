@@ -1,14 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router'
-
-
-import Home from '../components/Home.vue'
-import LanguagePage from '../components/LanguagePage.vue'
-
-
+import Home from '../Pages/Home.vue'
+import Keeled from "../Pages/Keeled.vue"
 
 const routes = [
   { path: '/', component: Home },
-  { path: '/language', component: LanguagePage },
+  { path: '/keeled', component: Keeled },
 ]
 
 const router = createRouter({

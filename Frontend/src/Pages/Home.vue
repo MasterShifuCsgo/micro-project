@@ -1,9 +1,14 @@
 <script setup>
+import { onMounted } from 'vue';
 import api from '../utils/api.js';
 
 const client = api();
-
-
+onMounted(async () => {
+    const { data, status } = await client.get("/comment", {
+        params: { nimi: "matemaatika" }
+    })
+    console.log(data, status)
+})
 
 </script>
 
@@ -11,10 +16,10 @@ const client = api();
     <div>
         <h1 id="title">Õppekavad</h1>
     </div>
-    <div id="oppekavd">
+    <div id="oppekavad">
         <div>
             <h1>Keeled ja humanitaarteadused</h1>
-            <button><router-link to="/language">Vaata õppeained</router-link></button>
+            <button><router-link to="/keeled">Vaata õppeained</router-link></button>
         </div>
         <div>
             <h1>Matemaatika ja loodusteadused</h1>
@@ -35,22 +40,21 @@ const client = api();
     </div>
 </template>
 
-
-<style>
+<style scoped>
 #title {
     text-align: center;
     margin-top: 20px;
     font-size: 2.5em;
 }
 
-#oppekavd {
+#oppekavad {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 20px;
     padding: 20px;
 }
 
-#oppekavd div {
+#oppekavad div {
     border: 1px solid #ccc;
     border-radius: 8px;
     padding: 20px;
@@ -58,12 +62,11 @@ const client = api();
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-#oppekavd h1 {
-    font-size: 1.5em;
-    margin-bottom: 10px;
+#oppekavad h1 {
+    font-size: 1.5em;    
 }
 
-#oppekavd button {
+#oppekavad button {
     background-color: #007BFF;
     color: white;
     border: none;
@@ -73,7 +76,7 @@ const client = api();
     font-size: 1em;
 }
 
-#oppekavd button:hover {
+#oppekavad button:hover {
     background-color: #0056b3;
 }
 
