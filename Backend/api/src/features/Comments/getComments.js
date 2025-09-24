@@ -3,7 +3,7 @@ import CheckIfLessonIsValid from "./helpers/CheckIfLessonIsValid.js";
 
 export default function getComment(req, res) {
 
-  const nimi = req.query?.nimi || 0;  
+  const nimi = req.query?.nimi;  
   const isValid = CheckIfLessonIsValid(nimi);
   if (!isValid) { return res.status(400).send({ error: `antud tunni nimi '${nimi}' ei meie andmetes defineeritud tunnina` }) }
 
