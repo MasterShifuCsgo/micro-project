@@ -13,7 +13,7 @@ app.use(cors({
 app.use(express.json());
 
 
-app.use("/comments", CreateCommentsRoutes());
+app.use("/comment", CreateCommentsRoutes());
 
 app.listen(PORT, () => {
   console.log(`server running on port: ${PORT}`);
