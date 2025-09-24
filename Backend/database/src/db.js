@@ -1,6 +1,6 @@
 import Database from "better-sqlite3";
 
-const database = new Database("/database.db", { verbose: console.log() });
+const database = new Database("./database.db", { verbose: console.log() });
 
 function exportDatabase() {
 
@@ -9,7 +9,7 @@ function exportDatabase() {
       id INTEGER PRIMARY KEY,
       tunni_nimetus TEXT, 
       hinnang INTEGER CHECK(hinnang > 0 and hinnang < 6), -- rating from 1 to 5 
-      text TEXT
+      kommentaar TEXT
     );
     `)
 

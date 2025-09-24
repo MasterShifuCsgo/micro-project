@@ -8,6 +8,7 @@
   },
   "scripts": {
     "dev": "vite",
+    "dev-server": "nodemon ./Backend/api/server.js",
     "build": "vite build",
     "preview": "vite preview"
   },

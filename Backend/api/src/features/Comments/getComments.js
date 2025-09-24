@@ -2,19 +2,18 @@ import db from "../../../../database/src/db.js";
 
 
 export default function getComment(req, res) {    
-  const nimi = req.query.nimi;
 
-  //MUST CHECK IF THE NAME IS IN THE /shared/lessons.json . follow the System architecture
-  
+  const nimi = req.query?.nimi || 0; 
+  //MUST CHECK IF THE NAME IS IN THE /shared/lessons.json . follow the System architecture    
 
   //type check the object
   if(typeof nimi !== "string"){
     return res.status(400).send({error: "nimi ei ole tüüpi 'string'"});
-  }  
-    
+  }    
+
   try{
-   const stmt = db.prepare("SELECT * FROM kommentaar WHERE tunni_nimi = ?");
-   const comment = stmt.run([tunni_nimetus.nimi])
+   const stmt = db.prepare("SELECT * FROM kommentaar WHERE tunni_nimetus = ?");
+   const comment = stmt.get([nimi])
    return res.status(200).send({result: comment}) // happy path ending
   }catch(err){
     console.log("DATABASE ERROR: ", err)

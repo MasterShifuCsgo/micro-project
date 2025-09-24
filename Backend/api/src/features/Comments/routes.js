@@ -5,8 +5,8 @@ import getComment from "./getComments.js";
 
 export default function CreateCommentsRoutes() {
   const routes = Router();
-  routes.get("?tunni_nimetus", getComment)
-  routes.post("", createComment)
+  routes.get("/", getComment)
+  routes.post("/", createComment)
   return routes;
 }
 
