@@ -12,8 +12,7 @@ export default function createComment(req, res) {
     return res.status(400).send({ error })
   }
 
-  //check if komment exists with name
-  //...
+  //check if komment exists with name  
 
 
   const { nimi, kommentaar, hinnang } = tunni_nimetus;
@@ -23,9 +22,9 @@ export default function createComment(req, res) {
   try {
     //create the post
     const stmt = db.prepare(`INSERT INTO kommentaar 
-              (tunni_nimi, hinnang, kommentaar) VALUES (?,?,?)`);
+              (tunni_nimetus, hinnang, kommentaar) VALUES (?,?,?)`);
     stmt.run([nimi, hinnang, kommentaar]);
-  } catch(err){        
+  } catch(err) {
     console.log("DATABASE ERROR:", err);
     return res.status(500).send({ error: "Andmebaas ei suutnud tekitada kommentaari" });
   }

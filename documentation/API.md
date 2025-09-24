@@ -1,5 +1,9 @@
 # API Documentation
 
+## Standard Error response
+
+`{ error: "Error as a string"}`
+
 ## Create Comment
 
 **Endpoint:** `POST /comment`
@@ -16,15 +20,17 @@ Request body **peab olema object** milles on järgmised read:
 
 > Vaata `/shared/typechecks/tunni_nimetus.js`
 
-**Result:** Loob uue kommentaari seotud tunniga.
+### Tulemused
+
+**Result:** Loob uue kommentaari seotud tunniga. Ei saada midagi tagasi, peale error-ite
 
 ### Error Codes
 
-| Kood | Kirjeldus                                 |
-| ---- | ----------------------------------------- |
-| 204  | Kommentaar tekitatud                      |
-| 400  | Vigane kutse, mida server ei saa kasutada |
-| 500  | Andmebaasi viga kommentaari loomisel      |
+| Kood | Kirjeldus                                                       |
+| ---- | --------------------------------------------------------------- |
+| 204  | Kommentaar tekitatud                                            |
+| 400  | Vigane kutse, mida server ei saa kasutada, tavaliset tüübi viga |
+| 500  | Andmebaas ei suutnud tekitada kommentaari                       |
 
 ---
 
@@ -42,10 +48,79 @@ Request body **peab olema object** milles on järgmised read:
 
 **Result:** Tagastab kõik kommentaarid, mis on seotud antud `tunni_nimi` väärtusega.
 
+### Õnnestunud päringute näited
+
+#### Näide 1
+
+Leidis paar kommentaari
+
+```json
+{
+  "result": [
+    {
+      "id": 1,
+      "tunni_nimetus": "String",
+      "hinnang": 1,
+      "kommentaar": "String"
+    },
+    {
+      "id": 2,
+      "tunni_nimetus": "String",
+      "hinnang": 1,
+      "kommentaar": "String"
+    }
+  ]
+}
+```
+
+#### Näide 2
+
+Ei Leidnud midagi
+
+```json
+{
+  "result": []
+}
+```
+
 ### Error Codes
 
-| Kood | Kirjeldus                                  |
-| ---- | ------------------------------------------ |
-| 200  | Päring õnnestus                            |
-| 400  | Vigane kutse, mida server ei saa kasutada  |
-| 500  | Andmebaasi viga kommentaaride tagastamisel |
+| Kood | Kirjeldus                              |
+| ---- | -------------------------------------- |
+| 200  | Päring õnnestus                        |
+| 400  | nimi ei ole tüüpi 'string'             |
+| 500  | Andmebaas ei suutnud võtta kommentaari |
+
+---
+
+## Get Comment Count
+
+**Endpoint:** `GET /comment/count?nimi=<tunni_nimi>`
+
+**Query Parameters:**
+
+```json
+{
+  "nimi": "String"
+}
+```
+
+**Result:** Tagastab kommentaaride koguse, mis on seotud antud `tunni_nimi` väärtusega.
+
+### Õnnestunud päringute näited
+
+```json
+{
+  "count": 0
+}
+```
+
+### Error Codes
+
+| Kood | Kirjeldus                                 |
+| ---- | ----------------------------------------- |
+| 200  | Päring õnnestus                           |
+| 400  | Vigane kutse, mida server ei saa kasutada |
+| 500  | Andmebaasi viga koguse tagastamisel       |
+
+---

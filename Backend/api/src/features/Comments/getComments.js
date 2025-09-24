@@ -13,7 +13,7 @@ export default function getComment(req, res) {
 
   try{
    const stmt = db.prepare("SELECT * FROM kommentaar WHERE tunni_nimetus = ?");
-   const comment = stmt.get([nimi])
+   const comment = stmt.all([nimi])
    return res.status(200).send({result: comment}) // happy path ending
   }catch(err){
     console.log("DATABASE ERROR: ", err)
