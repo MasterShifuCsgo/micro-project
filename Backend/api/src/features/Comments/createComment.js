@@ -1,5 +1,6 @@
 import db from "../../../../database/src/db.js";
 import TypeCheckTunniNimetus from "../../../../../shared/typechecks/tunni_nimetus.js";
+import CheckIfLessonIsValid from "./helpers/CheckIfLessonIsValid.js";
 
 export default function createComment(req, res) {
   const tunni_nimetus = req.body;
@@ -10,15 +11,14 @@ export default function createComment(req, res) {
   if (error) {
     console.log("Sending client Error: ", error);
     return res.status(400).send({ error })
-  }
+  }  
+  
 
-  //check if komment exists with name  
 
-
-  const { nimi, kommentaar, hinnang } = tunni_nimetus;
-
-  //MUST CHECK IF THE NAME IS IN THE /shared/lessons.json . follow the System architecture
-
+  const { nimi, kommentaar, hinnang } = tunni_nimetus;  
+  const isValid = CheckIfLessonIsValid(nimi);
+  if (!isValid) { return res.status(400).send({ error: `antud tunni nimi '${nimi}' ei meie andmetes defineeritud tunnina` }) }
+  
   try {
     //create the post
     const stmt = db.prepare(`INSERT INTO kommentaar 

@@ -7,31 +7,15 @@ Kõik kasutajad saavad lisada kommentaare. Õpetajad ja õppekorraldus saavad ne
 
 ---
 
-#### **2. Andmebaasi skeem**
-
-```sql
-CREATE TABLE kommentaar (
-  id INTEGER PRIMARY KEY,
-  kommenteerija TEXT,
-  hinnang INTEGER CHECK(hinnang > 0 and hinnang < 6), -- rating from 1 to 5
-  kommentaar TEXT
-);
-```
-
-**Põhjendus:**
-
-- Skeem on lihtne, sest projekt on väike.
-- `tunni_nimi` ja `kommenteerija` on tekstina piisavad, eraldi tabeleid pole vaja.
-- `CHECK` välistab vigased hinnangud.
-- Tulevikus saab lisada eraldi `tund` ja `kasutaja` tabelid.
-
+#### **2. Andmebaasi doc**
+eraldi fail selle jaoks
 
 ---
 
 #### **Arhitektuur**
 
-- shared/lessons.json failis on kirjas kõik tunnid, mida API kasutab, et leida ja tekitada kommentaare.
-
+- shared/lessons.json failis on listina kõik tunnid, mida API kasutab, et leida, valideerida ja tekitada kommentaare. 
+lessons.json on list, mida kasutavad CheckIfLessonIsValid(), et valideerida, kas tund eksisteerib.
 
 ---
 
