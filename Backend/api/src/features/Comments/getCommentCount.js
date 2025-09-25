@@ -3,8 +3,6 @@ import CheckIfLessonIsValid from './helpers/CheckIfLessonIsValid.js'
 
 export default function getComment(req, res) {
   const nimi = req.query.nimi
-  console.log(req.params, req.query);
-  console.log(nimi);
   const isValid = CheckIfLessonIsValid(nimi)
   if (!isValid) {
     return res
