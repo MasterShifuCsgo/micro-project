@@ -13,12 +13,13 @@ async function fetchCommentCount(nimi) {
         console.log("--------")
         console.log(res)
         console.log("--------")
+        return res.data.count;
     } catch (err) {
         console.error(err.response.data);
         return null; // fetching Comment failed     
     }
 
-    return res.data;
+
 }
 
 const subjectsNames = [
@@ -48,7 +49,7 @@ onMounted(async () => {
         <div v-for="subject in subjects" :key="subject.nimi">
             <h2>{{ subject.nimi }}</h2>
             <p>{{ subject.comments || 0 }} kommentaari</p>
-            <button>Vaata lähemalt</button>
+            <button><router-link :to="`/subject/${subject.nimi}`">Vaata lähemalt</router-link></button>
         </div>
     </div>
 </template>
