@@ -6,10 +6,10 @@ const client = api();
 
 const subjects = ref([]);
 
-async function fetchCommentCount(name) {
+async function fetchCommentCount(nimi) {
 
     try {
-        const res = await client.get("/comment/count", { params: { name } })
+        const res = await client.get("/comment/count", { params: { nimi } })
         console.log("--------")
         console.log(res)
         console.log("--------")
@@ -32,8 +32,8 @@ const subjectsNames = [
 
 onMounted(async () => {
     subjects.value = await Promise.all(
-        subjectsNames.map(async (name) => ({
-            name: name, comments: await fetchCommentCount(name)
+        subjectsNames.map(async (nimi) => ({
+            nimi: nimi, comments: await fetchCommentCount(nimi)
         }))
     )
     console.log(subjects.value)
@@ -45,8 +45,8 @@ onMounted(async () => {
         Keeled ja humanitaarteadused
     </h1>
     <div id="oppeained">
-        <div v-for="subject in subjects" :key="subject.name">
-            <h2>{{ subject.name }}</h2>
+        <div v-for="subject in subjects" :key="subject.nimi">
+            <h2>{{ subject.nimi }}</h2>
             <p>{{ subject.comments || 0 }} kommentaari</p>
             <button>Vaata lähemalt</button>
         </div>
