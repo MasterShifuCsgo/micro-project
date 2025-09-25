@@ -10,11 +10,6 @@ export default function getComment(req, res) {
       .send({ error: `antud tunni nimi '${nimi}' ei meie andmetes defineeritud tunnina` })
   }
 
-  //type check the object
-  if (typeof nimi !== 'string') {
-    return res.status(400).send({ error: "nimi ei ole tüüpi 'string'" })
-  }
-
   try {
     const stmt = db.prepare(
       'SELECT count(*) as count FROM kommentaar WHERE tunni_nimetus = ?',
