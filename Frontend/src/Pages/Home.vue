@@ -1,43 +1,46 @@
 <script setup>
-import { onMounted } from 'vue';
-import api from '../utils/api.js';
+import { RouterLink } from 'vue-router'
 
-const client = api();
-onMounted(async () => {
-    const { data, status } = await client.get("/comment", {
-        params: { nimi: "matemaatika" }
-    })
-    console.log(data, status)
-})
-
+const oppekavad = [
+  { 
+    title: 'Keeled ja humanitaarteadused', 
+    route: '/languages' 
+  },
+  { 
+    title: 'Matemaatika ja loodusteadused', 
+    route: null 
+  },
+  { 
+    title: 'Parktilised ja tehnoloogia ained', 
+    route: null 
+  },
+  { 
+    title: 'Kunsti- ja liikumisained', 
+    route: null 
+  },
+  { 
+    title: 'Elu- ja sotsiaalained', 
+    route: null 
+  },
+]
 </script>
 
 <template>
-    <div>
-        <h1 id="title">Õppekavad</h1>
+  <div>
+    <h1 id="title">Õppekavad</h1>
+  </div>
+
+  <div id="oppekavad">
+    <div v-for="(item, index) in oppekavad" :key="index">
+      <h1>{{ item.title }}</h1>
+
+      <router-link v-if="item.route" :to="item.route">
+        <button>Vaata õppeained</button>
+      </router-link>
+
+      <button v-else disabled>Vaata õppeained</button>
     </div>
-    <div id="oppekavad">
-        <div>
-            <h1>Keeled ja humanitaarteadused</h1>
-            <button><router-link to="/keeled">Vaata õppeained</router-link></button>
-        </div>
-        <div>
-            <h1>Matemaatika ja loodusteadused</h1>
-            <button>Vaata õppeained</button>
-        </div>
-        <div>
-            <h1>Parktilised ja tehnoloogia ained</h1>
-            <button>Vaata õppeained</button>
-        </div>
-        <div>
-            <h1>Kunsti- ja liikumisained</h1>
-            <button>Vaata õppeained</button>
-        </div>
-        <div>
-            <h1>Elu- ja sotsiaalained</h1>
-            <button>Vaata õppeained</button>
-        </div>
-    </div>
+  </div>
 </template>
 
 <style scoped>

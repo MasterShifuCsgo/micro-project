@@ -12,9 +12,9 @@ Request body **peab olema object** milles on järgmised read:
 
 ```json
 {
-  "nimi": "String",
-  "kommentaar": "String",
-  "hinnang": "Number (0 kuni 5)"
+  "name": "String",
+  "comment": "String",
+  "rating": 4 // 0 kuni 5 kaasaarvatud
 }
 ```
 
@@ -28,7 +28,7 @@ Request body **peab olema object** milles on järgmised read:
 
 | Kood | Kirjeldus                                                       |
 | ---- | --------------------------------------------------------------- |
-| 204  | Kommentaar tekitatud                                            |
+| 201  | Kommentaar tekitatud                                            |
 | 400  | Vigane kutse, mida server ei saa kasutada, tavaliset tüübi viga |
 | 500  | Andmebaas ei suutnud tekitada kommentaari                       |
 
@@ -36,13 +36,13 @@ Request body **peab olema object** milles on järgmised read:
 
 ## Get Comment
 
-**Endpoint:** `GET /comment?nimi=<tunni_nimi>`
+**Endpoint:** `GET /comment?name=<tunni_nimi>`
 
 **Query Parameters:**
 
 ```json
 {
-  "nimi": "String"
+  "name": "String"
 }
 ```
 
@@ -59,15 +59,15 @@ Leidis paar kommentaari
   "result": [
     {
       "id": 1,
-      "tunni_nimetus": "String",
-      "hinnang": 1,
-      "kommentaar": "String"
+      "lesson_name": "String",
+      "rating": 1,
+      "comment": "String"
     },
     {
       "id": 2,
-      "tunni_nimetus": "String",
-      "hinnang": 1,
-      "kommentaar": "String"
+      "lesson_name": "String",
+      "rating": 1,
+      "comment": "String"
     }
   ]
 }
@@ -95,13 +95,13 @@ Ei Leidnud midagi
 
 ## Get Comment Count
 
-**Endpoint:** `GET /comment/count?nimi=<tunni_nimi>`
+**Endpoint:** `GET /comment/count?name=<tunni_nimi>`
 
 **Query Parameters:**
 
 ```json
 {
-  "nimi": "String"
+  "name": "String"
 }
 ```
 
@@ -124,3 +124,8 @@ Ei Leidnud midagi
 | 500  | Andmebaasi viga koguse tagastamisel       |
 
 ---
+
+# Further developlement notes
+
+logError function is in the shared folder.
+that is used to log errors in a strandardized way. Please use it.

@@ -1,40 +1,30 @@
 <script setup>
 import { onMounted, ref } from 'vue';
 import api from '../utils/api.js';
+import lessons from '../../../shared/lessons.json' with {type: "json"}
+
+const languages = lessons.languages
 
 const client = api();
 
 const subjects = ref([]);
 
-async function fetchCommentCount(nimi) {
+async function fetchCommentCount(name) {
 
     try {
-        const res = await client.get("/comment/count", { params: { nimi } })
-        console.log("--------")
-        console.log(res)
-        console.log("--------")
+        const res = await client.get("/comment/count", { params: { name } })
         return res.data.count;
     } catch (err) {
         console.error(err.response.data);
         return null; // fetching Comment failed     
     }
 
-
 }
-
-const subjectsNames = [
-    "Eesti keel",
-    "Inglise keel",
-    "Kirjandus",
-    "Ajalugu",
-    "Filosoofia",
-    "Kunstiajalugu"
-]
 
 onMounted(async () => {
     subjects.value = await Promise.all(
-        subjectsNames.map(async (nimi) => ({
-            nimi: nimi, comments: await fetchCommentCount(nimi)
+        languages.map(async (name) => ({
+            name, comments: await fetchCommentCount(name)
         }))
     )
     console.log(subjects.value)
@@ -46,17 +36,20 @@ onMounted(async () => {
         Keeled ja humanitaarteadused
     </h1>
     <div id="oppeained">
-        <div v-for="subject in subjects" :key="subject.nimi">
-            <h2>{{ subject.nimi }}</h2>
+        <div v-for="subject in subjects" :key="subject.name">
+            <h2>{{ subject.name }}</h2>
             <p>{{ subject.comments || 0 }} kommentaari</p>
-            <button><router-link :to="`/subject/${subject.nimi}`">Vaata lähemalt</router-link></button>
+            <button>
+                <router-link :to="`/kommentaarid/${subject.name}`">
+                    Vaata lähemalt</router-link>
+            </button>
         </div>
     </div>
 </template>
 
 <style scoped>
 h1 {
-    text-align: center;    
+    text-align: center;
     font-size: 2.5em;
 }
 

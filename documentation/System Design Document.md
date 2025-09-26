@@ -15,6 +15,7 @@ eraldi fail selle jaoks
 #### **Arhitektuur**
 
 - shared/lessons.json failis on listina kõik tunnid, mida API kasutab, et leida, valideerida ja tekitada kommentaare. 
+lessons.json'i muutes, muudad ka milliseid tunde näiteks 'keeled' või mõni muu leht näitab.
 lessons.json on list, mida kasutavad CheckIfLessonIsValid(), et valideerida, kas tund eksisteerib.
 
 ---

@@ -1,35 +1,36 @@
 import db from '../../../../database/src/db.js'
-import TypeCheckTunniNimetus from '../../../../../shared/typechecks/tunni_nimetus.js'
+import LessonTypeCheck from '../../../../../shared/typechecks/LessonTypeCheck.js'
 import CheckIfLessonIsValid from './helpers/CheckIfLessonIsValid.js'
 
 export default function createComment(req, res) {
-  const tunni_nimetus = req.body
+  const lesson_data = req.body
 
   //type check the object
-  const { error } = TypeCheckTunniNimetus.validate(tunni_nimetus)
+  const { error } = LessonTypeCheck.validate(lesson_data)
 
   if (error) {
     console.log('Sending client Error: ', error)
     return res.status(400).send({ error })
   }
 
-  const { nimi, kommentaar, hinnang } = tunni_nimetus
-  const isValid = CheckIfLessonIsValid(nimi)
+  const { name, comment, rating } = lesson_data
+
+  const isValid = CheckIfLessonIsValid(name)
   if (!isValid) {
     return res
       .status(400)
-      .send({ error: `antud tunni nimi '${nimi}' ei meie andmetes defineeritud tunnina` })
+      .send({ error: `antud tunni nimi '${name}' ei meie andmetes defineeritud tunnina` })
   }
 
   try {
     //create the post
-    const stmt = db.prepare(`INSERT INTO kommentaar 
-              (tunni_nimetus, hinnang, kommentaar) VALUES (?,?,?)`)
-    stmt.run([nimi, hinnang, kommentaar])
+    const stmt = db.prepare(`INSERT INTO comments 
+              (lesson_name, rating, comment) VALUES (?,?,?)`)
+    stmt.run([name, rating, comment])
   } catch (err) {
-    console.log('DATABASE ERROR:', err)
+    logError('DATABASE', 'createComment.js', err)
     return res.status(500).send({ error: 'Andmebaas ei suutnud tekitada kommentaari' })
   }
 
-  return res.sendStatus(204)
+  return res.sendStatus(201)
 }
