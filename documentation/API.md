@@ -127,5 +127,5 @@ Ei Leidnud midagi
 
 # Further developlement notes
 
-logError function is in the shared folder.
+logError.js function is in the shared folder.
 that is used to log errors in a strandardized way. Please use it.

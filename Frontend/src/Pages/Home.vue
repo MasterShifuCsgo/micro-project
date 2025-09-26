@@ -2,25 +2,25 @@
 import { RouterLink } from 'vue-router'
 
 const oppekavad = [
-  { 
-    title: 'Keeled ja humanitaarteadused', 
-    route: '/languages' 
+  {
+    title: 'Keeled ja humanitaarteadused',
+    route: '/languages'
   },
-  { 
-    title: 'Matemaatika ja loodusteadused', 
-    route: null 
+  {
+    title: 'Matemaatika ja loodusteadused',
+    route: null
   },
-  { 
-    title: 'Parktilised ja tehnoloogia ained', 
-    route: null 
+  {
+    title: 'Parktilised ja tehnoloogia ained',
+    route: null
   },
-  { 
-    title: 'Kunsti- ja liikumisained', 
-    route: null 
+  {
+    title: 'Kunsti- ja liikumisained',
+    route: null
   },
-  { 
-    title: 'Elu- ja sotsiaalained', 
-    route: null 
+  {
+    title: 'Elu- ja sotsiaalained',
+    route: null
   },
 ]
 </script>
@@ -32,58 +32,44 @@ const oppekavad = [
 
   <div id="oppekavad">
     <div v-for="(item, index) in oppekavad" :key="index">
-      <h1>{{ item.title }}</h1>
+      <h3>{{ item.title }}</h3>
 
-      <router-link v-if="item.route" :to="item.route">
-        <button>Vaata õppeained</button>
+      <router-link v-if="item.route" :to="item.route" class="btn">
+        Vaata õppeained
       </router-link>
 
-      <button v-else disabled>Vaata õppeained</button>
+      <button v-else class="btn-disabled" disabled>Vaata õppeained</button>
     </div>
   </div>
 </template>
 
 <style scoped>
 #title {
-    text-align: center;
-    margin-top: 20px;
-    font-size: 2.5em;
+  text-align: center;
+  margin-top: 20px;
+  font-size: 2.5em;
+}
+
+.button {
+  margin-top: 20px;
 }
 
 #oppekavad {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-    padding: 20px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  padding: 20px;
 }
 
 #oppekavad div {
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    padding: 20px;
-    text-align: center;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 #oppekavad h1 {
-    font-size: 1.5em;    
-}
-
-#oppekavad button {
-    background-color: #007BFF;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1em;
-}
-
-#oppekavad button:hover {
-    background-color: #0056b3;
-}
-
-#oppekavad button:focus {
-    background-color: #6a6a6b;
+  font-size: 1.5em;
 }
 </style>
