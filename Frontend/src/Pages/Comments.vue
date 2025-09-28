@@ -2,43 +2,90 @@
 import { onMounted, ref } from 'vue';
 import client from '../utils/api.js';
 import Star from './components/Star.vue';
+import Modal from './components/Modal.vue';
 
-const { name } = defineProps({
-  name: {
+const { lesson_name } = defineProps({
+  lesson_name: {
     type: String,
     default: ""
-  }  
+  }
 })
 
+const modalController = ref(null);
 const comments = ref([]);
 
-// fetch comments from the server
-async function getComments(){
-  return await client.get("/comment", {params: {name: name}});
+//form
+const userName = ref(null);
+const description = ref(null);
+const rating = ref(1);
+
+
+
+async function fetchComments(){  
+  // fetch comments from the server
+  const { data } = await client.get("/comment", { params: { name: lesson_name } });
+  comments.value = data.result;
+}
+
+async function submitForm() {  
+  client.post("/comment", { user_name: userName.value, lesson_name: lesson_name, comment: description.value, rating: rating.value })  
+
+  const oldComments = comments.value;
+  await fetchComments()      
+  console.log(oldComments, comments.value)
+  while(oldComments.length === comments.value.length){    
+    setTimeout(() => {console.log("waiting for change")}, 200)    
+    await fetchComments()    
+  }  
+
 }
 
 onMounted(async () => {
-  const { data } = await getComments();
-  console.log(data.result)
-  comments.value = data.result;
+  await fetchComments();
 })
 
 
 </script>
 
 <template>
+  <Modal ref="modalController">
+    <form @submit.prevent="submitForm" class="form">
+      <div class="inputs">
+        <div class="field">
+          <label>Sinu nimi</label>
+          <input type="text" v-model="userName" required />
+        </div>
+
+        <div class="field">
+          <label>Lisa Kommentaar</label>
+          <textarea rows="10" cols="45" v-model="description" required></textarea>
+        </div>
+
+        <div class="field" style="display: flex; flex-direction: column; gap: 4px;">
+          <label>Anna Hinnang</label>
+          <div class="stars">
+            <Star style="cursor: pointer;" :size="33" v-for="i in 5" :key="i" :disabled="rating < i"
+              @click="() => { rating = i }" />
+          </div>
+        </div>
+      </div>
+
+      <button class="btn" type="submit">Lisa</button>
+    </form>
+
+  </Modal>
   <div class="container">
-    <h1>{{ name }}</h1>
+    <h1>{{ lesson_name }}</h1>
     <div class="content">
       <nav class="buttons">
-        <button class="btn">Lisa</button>
+        <button class="btn" @click="modalController.toggle(modalController.id)">Lisa</button>
       </nav>
       <div class="comments-list">
         <div v-for="comment in comments" :key="comment.id" class="comment-container">
           <div class="details">
-            <p class="title">{{ comment.lesson_name }}</p>
+            <p class="title">{{ comment.user_name }}</p>
             <div class="stars">
-              <Star v-for="i in 5" :key="i" :disabled="comment.rating < i"/>
+              <Star v-for="i in 5" :key="i" :disabled="comment.rating < i" />
             </div>
           </div>
           <p class="comment">{{ comment['comment'] }}</p>
@@ -51,6 +98,50 @@ onMounted(async () => {
 <style scoped>
 p {
   margin: 0px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin: 2em 0em;
+}
+
+.form>.inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.form button {
+  width: min-content;
+}
+
+.form .field label {
+  display: flex;
+  flex-direction: column;
+  font-size: large;
+}
+
+.form .field>input,
+textarea {
+  border: solid 2px #2D72C2;
+  border-radius: 0px 1em 1em;
+  padding: 12px 14px;
+  font-size: larger;
+}
+
+.form .field>textarea {
+  padding: 7px 10px;
+  width: 460px;
+}
+
+.form .field>input {
+  width: 350px;
+}
+
+.form .field>label {
+  font-weight: 500;
 }
 
 .container {
@@ -105,11 +196,9 @@ p {
   font-size: 1.4em;
 }
 
-.comment-container>.comment {}
-
 .stars {
   display: flex;
-  gap: 5px;
+  gap: 2px;
 
 }
 </style>

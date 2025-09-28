@@ -1,0 +1,17 @@
+
+
+1. if you want to write clean and readable code, make sure you think about how someone would use it.
+make it as intuitive as you can because they will have no idea how it works at first glance.
+
+great example is Modal.vue - i thought i could just add active and disable refs, 
+and use state managment to control the modal, but i knew that was a bad idea.
+It would hurt scalability, so i thought about better solutions.
+solutions which are scalable and make it easy to use. 
+My solution is documented in Frontend.md and you can see it by viewing the Modal.vue
+
+2. i see myself refactoring a lot of important code that is not supposed to be chagned after its written.
+exmaples, router.js, first pages when they have been completed, api endpoints. 
+this code should say like this. remember your first lesson, before you write any code.
+think about how you would keep it scalable and intuitive. 
+
+3. try to match the URL parameters and API URI calls. it makes sharing links possible.

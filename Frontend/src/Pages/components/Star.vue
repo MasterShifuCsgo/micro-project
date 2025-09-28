@@ -4,17 +4,25 @@
     disabled: {
       type: Boolean,
       default: true
+    },
+    size: {
+      type:Number,
+      default: 25
     }
   })
+  
 
 </script>
 <template>
-  <div class="star" :class="{disabled: disabled}"></div>
+  <div class="star" 
+  :style="{
+    width: size + 'px',
+    height: size + 'px'
+  }"
+  :class="{disabled: disabled}"></div>
 </template>
 <style scoped>
-.star {
-  width: 25px;
-  height: 25px;
+.star {  
   background: #2F98D9;
   clip-path: polygon(50% 0%,
       61% 35%,

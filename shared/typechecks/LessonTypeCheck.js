@@ -1,7 +1,11 @@
 import Joi from "joi";
 
 const LessonTypeCheck = Joi.object({
-  name: Joi.string().required().messages({
+  user_name: Joi.string().required().messages({
+    'string.base': "nimi peab olema string",
+    'any.required': "kasutaja nimi, kes kommentaari tekitas, peab eksisteerima"
+  }),
+  lesson_name: Joi.string().required().messages({
     'string.base': 'nimi peab olema string',
     'any.required': 'nimi peab olema JSON-is'
   }),

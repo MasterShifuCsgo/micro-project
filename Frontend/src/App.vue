@@ -10,12 +10,12 @@ h2,
 h3,
 h4,
 h5,
-p {
+p,label,button, input {
   font-family: 'Inter', sans-serif;  
 }
 
-.btn {
-  font-family: 'Inter', sans-serif;
+
+.btn {  
   background-color: #007BFF;
   text-decoration: none;
   color: white;
@@ -25,6 +25,7 @@ p {
   font-size: 1em;
   font-weight: bold;
   cursor: pointer;  
+  transform: all 2s;
 }
 
 .btn:hover {
@@ -36,7 +37,7 @@ p {
 }
 
 .btn-disabled {
-  font-family: 'Inter', sans-serif;
+
   background-color: #e7e7e7;
   text-decoration: none;
   box-sizing: border-box;
@@ -48,5 +49,23 @@ p {
   font-size: 1em;
   font-weight: bold;  
 }
+
+.btn.back {
+  background-color: white;
+  color: rgb(99, 99, 99);  
+  padding: 8px 20px;
+}
+
+.btn.back::before{
+  content: "← ";
+}
+
+input:focus,
+textarea:focus,
+button:focus {
+  outline: none; /* removes the default browser highlight */  
+}
+
+
 
 </style>

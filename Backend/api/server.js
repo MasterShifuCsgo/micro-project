@@ -20,6 +20,7 @@ app.use((req, res, next) => {
   res.send = function (body) {
     // Only log once, after Express has converted objects to JSON    
     if (typeof body === 'object') {      
+      console.log(`\nHTTP REQUEST: ${req.method} ${req.originalUrl}`);             
       console.log('Request Body:', req.body);            
       console.log('Request Query:', req.query);      
       console.log('Response:', body);      

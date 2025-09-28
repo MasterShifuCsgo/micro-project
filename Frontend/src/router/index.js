@@ -7,7 +7,7 @@ const routes = [
   { path: '/', component: Home },
   { path: '/languages', component: Languages },
   {
-    path: '/comments/:name',    
+    path: '/comments/:lesson_name',    
     component: Comments,
     props: true,
   },

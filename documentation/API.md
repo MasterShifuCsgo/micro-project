@@ -12,7 +12,8 @@ Request body **peab olema object** milles on järgmised read:
 
 ```json
 {
-  "name": "String",
+  "user_name": "User Name",
+  "lesson_name": "String",
   "comment": "String",
   "rating": 4 // 0 kuni 5 kaasaarvatud
 }

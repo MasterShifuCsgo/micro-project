@@ -1,5 +1,6 @@
 import db from '../../../../database/src/db.js'
 import CheckIfLessonIsValid from './helpers/CheckIfLessonIsValid.js'
+import logError from '../../../../../shared/logging/logError.js'
 
 export default function getComment(req, res) {
   const name = req.query.name

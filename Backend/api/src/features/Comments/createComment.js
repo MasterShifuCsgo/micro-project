@@ -1,6 +1,7 @@
 import db from '../../../../database/src/db.js'
 import LessonTypeCheck from '../../../../../shared/typechecks/LessonTypeCheck.js'
 import CheckIfLessonIsValid from './helpers/CheckIfLessonIsValid.js'
+import logError from '../../../../../shared/logging/logError.js'
 
 export default function createComment(req, res) {
   const lesson_data = req.body
@@ -13,20 +14,20 @@ export default function createComment(req, res) {
     return res.status(400).send({ error })
   }
 
-  const { name, comment, rating } = lesson_data
+  const { user_name, lesson_name, comment, rating } = lesson_data
 
-  const isValid = CheckIfLessonIsValid(name)
+  const isValid = CheckIfLessonIsValid(lesson_name)
   if (!isValid) {
     return res
       .status(400)
-      .send({ error: `antud tunni nimi '${name}' ei meie andmetes defineeritud tunnina` })
+      .send({ error: `antud tunni nimi '${lesson_name}' ei meie andmetes defineeritud tunnina` })
   }
 
   try {
     //create the post
     const stmt = db.prepare(`INSERT INTO comments 
-              (lesson_name, rating, comment) VALUES (?,?,?)`)
-    stmt.run([name, rating, comment])
+              (user_name, lesson_name, rating, comment) VALUES (?,?,?,?)`)
+    stmt.run([user_name, lesson_name, rating, comment])
   } catch (err) {
     logError('DATABASE', 'createComment.js', err)
     return res.status(500).send({ error: 'Andmebaas ei suutnud tekitada kommentaari' })
