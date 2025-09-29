@@ -5,6 +5,7 @@ import Comments from '../Pages/Comments.vue'
 import Maths from '../Pages/Maths.vue'
 import Practical from '../Pages/Practical.vue'
 import Arts from '../Pages/Arts.vue'
+import Social from '../Pages/Social.vue'
 
 const routes = [
   { path: '/', component: Home },
@@ -12,6 +13,7 @@ const routes = [
   { path: '/maths', component: Maths },
   { path: '/practical', component: Practical },
   { path: '/arts', component: Arts },
+  { path: '/socials', component: Social },
   {
     path: '/comments/:lesson_name',    
     component: Comments,

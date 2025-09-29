@@ -19,8 +19,8 @@ const oppekavad = [
     route: "/arts"
   },
   {
-    title: 'Elu- ja sotsiaalained',
-    route: null
+    title: 'Sotsiaalained',
+    route: "/socials"
   },
 ]
 </script>
