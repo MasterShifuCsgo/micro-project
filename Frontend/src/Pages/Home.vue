@@ -12,7 +12,7 @@ const oppekavad = [
   },
   {
     title: 'Parktilised ja tehnoloogia ained',
-    route: null
+    route: "/practical"
   },
   {
     title: 'Kunsti- ja liikumisained',

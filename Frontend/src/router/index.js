@@ -3,11 +3,13 @@ import Home from '../Pages/Home.vue'
 import Languages from '../Pages/Languages.vue'
 import Comments from '../Pages/Comments.vue'
 import Maths from '../Pages/Maths.vue'
+import Practical from '../Pages/Practical.vue'
 
 const routes = [
   { path: '/', component: Home },
   { path: '/languages', component: Languages },
   { path: '/maths', component: Maths },
+  { path: '/practical', component: Practical },
   {
     path: '/comments/:lesson_name',    
     component: Comments,

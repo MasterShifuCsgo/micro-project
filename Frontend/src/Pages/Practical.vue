@@ -1,11 +1,9 @@
-
 <script setup>
 import { onMounted, ref } from 'vue';
 import client from '../utils/api.js';
 import lessons from '../../../shared/lessons.json'
-import { RouterLink } from 'vue-router'
 
-const maths = lessons.maths
+const practical = lessons.practical
 const subjects = ref([]);
 
 async function fetchCommentCount(name) {
@@ -20,7 +18,7 @@ async function fetchCommentCount(name) {
 
 onMounted(async () => {
   subjects.value = await Promise.all(
-    maths.map(async (name) => ({
+    practical.map(async (name) => ({
       name, comments: await fetchCommentCount(name)
     }))
   )
@@ -29,7 +27,7 @@ onMounted(async () => {
 </script>
 <template>
   <h1>
-    Matemaatika ja loodusteadused
+    Parktilised ja tehnoloogia ained
   </h1>
   <div id="oppeained">
     <div v-for="subject in subjects" :key="subject.name" class="lessons">

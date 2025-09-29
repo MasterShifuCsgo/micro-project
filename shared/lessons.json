@@ -16,5 +16,12 @@
     "Bioloogia",
     "Geograafia",
     "Informaatika"
+  ],
+
+  "practical": [
+    "Informaatika",
+    "Tehnoloogiaõpetus",
+    "Tööõpetus",
+    "Ettevõtlusõpetus"
   ]
 }
