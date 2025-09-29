@@ -70,7 +70,7 @@ onMounted(async () => {
         </div>
       </div>
 
-      <button class="btn" type="submit">Lisa</button>
+      <button class="btn" type="submit" @click="modalController.toggle(modalController.id)">Lisa</button>
     </form>
 
   </Modal>

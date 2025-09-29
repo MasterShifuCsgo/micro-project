@@ -10,12 +10,12 @@ h2,
 h3,
 h4,
 h5,
-p,label,button, input {
+p,label,button, input, .btn {
   font-family: 'Inter', sans-serif;  
 }
 
 
-.btn {  
+.btn {    
   background-color: #007BFF;
   text-decoration: none;
   color: white;
@@ -65,7 +65,5 @@ textarea:focus,
 button:focus {
   outline: none; /* removes the default browser highlight */  
 }
-
-
 
 </style>
