@@ -16,7 +16,7 @@ const oppekavad = [
   },
   {
     title: 'Kunsti- ja liikumisained',
-    route: null
+    route: "/arts"
   },
   {
     title: 'Elu- ja sotsiaalained',

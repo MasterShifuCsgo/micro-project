@@ -23,5 +23,12 @@
     "Tehnoloogiaõpetus",
     "Tööõpetus",
     "Ettevõtlusõpetus"
+  ],
+  "arts" : [
+    "Kunst",
+    "Muusika",
+    "Käsitöö",
+    "Kehaline kasvatus",
+    "Draama"
   ]
 }
