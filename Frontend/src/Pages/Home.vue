@@ -8,7 +8,7 @@ const oppekavad = [
   },
   {
     title: 'Matemaatika ja loodusteadused',
-    route: null
+    route: '/maths'
   },
   {
     title: 'Parktilised ja tehnoloogia ained',
