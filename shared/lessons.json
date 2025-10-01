@@ -1,6 +1,6 @@
 
 {
-  "languages": [    
+  "Keeled ja humanitaarteadused": [    
     "Eesti keel",
     "Inglise keel",
     "Kirjandus",
@@ -9,7 +9,7 @@
     "Kunstiajalugu"
   ],
 
-  "maths": [
+  "Matemaatika ja loodusteadused": [
     "Matemaatika",
     "Füüsika",
     "Keemia",
@@ -18,20 +18,20 @@
     "Informaatika"
   ],
 
-  "practical": [
+  "Praktilised- ja tehnoloogia ained": [
     "Informaatika",
     "Tehnoloogiaõpetus",
     "Tööõpetus",
     "Ettevõtlusõpetus"
   ],
-  "arts" : [
+  "Kunsti- ja liikumisained" : [
     "Kunst",
     "Muusika",
     "Käsitöö",
     "Kehaline kasvatus",
     "Draama"
   ],
-  "socials" : [
+  "Sotsiaalained" : [
     "Psühholoogia",
     "Õigusteadus",
     "Majandus",

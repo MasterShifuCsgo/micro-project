@@ -180,7 +180,7 @@ textarea {
   border-radius: 15px;
   padding: 18px 22px;
   width: 100%;
-  max-width: 800px;
+  max-width: 500px;
   box-sizing: border-box;
   gap: 10px;
 }

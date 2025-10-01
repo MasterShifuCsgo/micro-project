@@ -8,7 +8,7 @@ export default function getComment(req, res) {
   if (!isValid) {
     return res
       .status(400)
-      .send({ error: `antud tunni nimi '${name}' ei meie andmetes defineeritud tunnina` })
+      .send({ error: `antud tunni nimi '${name}' ei ole meie andmetes defineeritud tunnina` })
   }
 
   try {

@@ -1,19 +1,15 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../Pages/Home.vue'
-import Languages from '../Pages/Languages.vue'
 import Comments from '../Pages/Comments.vue'
-import Maths from '../Pages/Maths.vue'
-import Practical from '../Pages/Practical.vue'
-import Arts from '../Pages/Arts.vue'
-import Social from '../Pages/Social.vue'
+import Lessons from '../Pages/Lessons.vue'
 
 const routes = [
-  { path: '/', component: Home },
-  { path: '/languages', component: Languages },
-  { path: '/maths', component: Maths },
-  { path: '/practical', component: Practical },
-  { path: '/arts', component: Arts },
-  { path: '/socials', component: Social },
+  { path: '/', component: Home },  
+  { 
+    path: '/lesson/:lesson_name',
+    component: Lessons,
+    props: true
+  },
   {
     path: '/comments/:lesson_name',    
     component: Comments,

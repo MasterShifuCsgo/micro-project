@@ -3,24 +3,19 @@ import { RouterLink } from 'vue-router'
 
 const oppekavad = [
   {
-    title: 'Keeled ja humanitaarteadused',
-    route: '/languages'
+    name: 'Keeled ja humanitaarteadused',    
   },
   {
-    title: 'Matemaatika ja loodusteadused',
-    route: '/maths'
+    name: 'Matemaatika ja loodusteadused',    
   },
   {
-    title: 'Parktilised ja tehnoloogia ained',
-    route: "/practical"
+    name: 'Praktilised- ja tehnoloogia ained',    
   },
   {
-    title: 'Kunsti- ja liikumisained',
-    route: "/arts"
+    name: "Kunsti- ja liikumisained"
   },
   {
-    title: 'Sotsiaalained',
-    route: "/socials"
+    name: 'Sotsiaalained',
   },
 ]
 </script>
@@ -32,13 +27,11 @@ const oppekavad = [
 
   <div id="oppekavad">
     <div v-for="(item, index) in oppekavad" :key="index">
-      <h3>{{ item.title }}</h3>
+      <h3>{{ item.name }}</h3>
 
-      <router-link v-if="item.route" :to="item.route" class="btn">
+      <router-link :to="'lesson/' + item.name" class="btn">
         Vaata õppeained
-      </router-link>
-
-      <button v-else class="btn-disabled" disabled>Vaata õppeained</button>
+      </router-link>      
     </div>
   </div>
 </template>
@@ -55,21 +48,34 @@ const oppekavad = [
 }
 
 #oppekavad {
-  display: grid;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   grid-template-columns: repeat(3, 1fr);
   gap: 20px;
-  padding: 20px;
+  padding: 20px;  
 }
 
 #oppekavad div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;  
+  gap: 5px;
   border: 1px solid #ccc;
-  border-radius: 8px;
+  border-radius: 8px;  
   padding: 20px;
   text-align: center;
+  width: clamp(15em, 100vw, 20em);  
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 #oppekavad h1 {
   font-size: 1.5em;
+}
+
+@media only screen and (min-width: 600px) {
+  #oppekavad {
+    display: flex;
+  }
 }
 </style>

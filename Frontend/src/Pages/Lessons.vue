@@ -1,11 +1,17 @@
-
 <script setup>
 import { onMounted, ref } from 'vue';
 import client from '../utils/api.js';
-import lessons from '../../../shared/lessons.json'
-import { RouterLink } from 'vue-router'
+import lessons from '../../../shared/lessons.json' with {type: "json"}
 
-const socials = lessons.socials
+const { lesson_name } = defineProps({
+  lesson_name: {
+    type: String,
+    default: "Nothing"
+  }
+})
+
+
+const lessonType = lessons[lesson_name]
 const subjects = ref([]);
 
 async function fetchCommentCount(name) {
@@ -19,8 +25,9 @@ async function fetchCommentCount(name) {
 }
 
 onMounted(async () => {
+  console.log('1.', lesson_name)  
   subjects.value = await Promise.all(
-    socials.map(async (name) => ({
+    lessonType.map(async (name) => ({
       name, comments: await fetchCommentCount(name)
     }))
   )
@@ -29,12 +36,14 @@ onMounted(async () => {
 </script>
 <template>
   <h1>
-    Sotsiaalained
+    {{ lesson_name }}
   </h1>
   <div id="oppeained">
     <div v-for="subject in subjects" :key="subject.name" class="lessons">
       <div class="details">
-        <h2 style="margin: 0px">{{ subject.name }}</h2>
+        <div class="title">
+          <h2 style="margin: 0px">{{ subject.name }}</h2>
+        </div>
         <p>{{ subject.comments || 0 }} kommentaari</p>
       </div>
       <router-link class="btn" :to="`/comments/${subject.name}`">
@@ -55,20 +64,28 @@ h1 {
   flex-wrap: wrap;
   gap: 20px;
   justify-content: center;
-
+  padding: 0px 3em;
 }
 
 .details {
   display: flex;
-  flex-direction: column;
-  gap: 5px
+  flex-direction: column;    
+  gap: 5px;  
 }
 
 .lessons {
   border: 1px solid #ccc;
   border-radius: 8px;
-  padding: 2em 10em;
+  padding: 2em 3em;
+  min-width:  clamp(10em, 10vw, 20em);  
+  max-width:  clamp(10em, 10vw, 20em);
   text-align: center;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
+
+.lessons > .details > .title > h2 {
+  overflow-x: auto;   
+}
+
+
 </style>
