@@ -6,21 +6,28 @@ const active = ref(false);
 let modalId = 0;
 const id = ref("modal-" + modalId++);
 
-function toggle(modalId = "modal-0") {
+function open(modalId = "modal-0") {
   //if modals id matches the given id - open the modal
   if (id.value === modalId) {
-    active.value = !active.value;
+    active.value = true;
   }
 }
 
-defineExpose({ id, toggle });
+function close(modalId = "modal-0") {
+  //if modals id matches the given id - open the modal
+  if (id.value === modalId) {
+    active.value = false;
+  }
+}
+
+defineExpose({ id, open, close });
 
 </script>
 <template>
   <div class="modal" v-show="active" :id="id">
     <div class="container">
       <div class="top">
-        <button class="btn back" @click="() => {toggle(id)}">Tagasi</button>
+        <button class="btn back" @click="() => {close(id)}">Tagasi</button>
       </div>
       <div class="content">
         <slot></slot>
