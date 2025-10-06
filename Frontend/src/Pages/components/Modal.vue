@@ -49,7 +49,6 @@ defineExpose({ id, open, close });
   background-color: rgba(116, 116, 116, 0.589);
 }
 
-.modal>.container {}
 
 .modal>.container>.top,
 .bottom {
@@ -76,5 +75,12 @@ defineExpose({ id, open, close });
   background-color: white;
 }
 
+@media (max-width: 700px){
+
+.modal>.container>.content {
+  padding: 0em 1em;
+}
+
+}
 
 </style>

@@ -96,12 +96,13 @@ textarea {
 }
 
 .form .field>textarea {
-  padding: 7px 10px;
-  width: 460px;
+  padding: 7px 10px;  
+  width: clamp(15em, 40vw, 40em);
+  max-block-size: 6em;
 }
 
 .form .field>input {
-  width: 350px;
+  max-width: 350px;
 }
 
 .form .field>label {
