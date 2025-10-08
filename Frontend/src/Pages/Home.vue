@@ -21,11 +21,14 @@ const oppekavad = [
 </script>
 
 <template>
+  
   <div>
     <h1 id="title">Õppekavad</h1>
   </div>
 
-  <div id="oppekavad">
+  <div id="oppekavad" style="height: 70vh;       /* Just for the demo          */
+    overflow-y: auto;    /* Trigger vertical scroll    */
+    overflow-x: hidden; ">
     <div v-for="(item, index) in oppekavad" :key="index">
       <h3>{{ item.name }}</h3>
 

@@ -38,6 +38,7 @@ p,label,button, input, .btn {
 
 .btn.secondary {
   background: #004c9c;
+  
 }
 
 .btn-disabled {

@@ -34,12 +34,14 @@ onMounted(async () => {
 })
 
 </script>
+
 <template>  
+  <div style="display: flex; justify-content: center; align-content: center; flex-direction: column; overflow-y: auto; height: 100vh; ">
   <h1>
     {{ lesson_name }}
   </h1>
   <div id="oppeained">
-  <RouterLink class="btn secondary" to="/">Mine tagasi</RouterLink>
+
     <div v-for="subject in subjects" :key="subject.name" class="lessons">
       <div class="details">
         <div class="title">
@@ -51,7 +53,10 @@ onMounted(async () => {
         Vaata lähemalt
       </router-link>
     </div>
+  </div >
+    <RouterLink class="btn secondary" to="/" style="margin: auto; margin-top: 3rem;">Mine tagasi</RouterLink>
   </div>
+
 </template>
 
 <style scoped>

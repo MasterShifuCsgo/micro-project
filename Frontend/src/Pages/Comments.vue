@@ -44,7 +44,6 @@ onMounted(async () => {
   
   <div class="container">
     <h1>{{ lesson_name }}</h1>
-  <RouterLink class="btn secondary" to="/">Mine tagasi</RouterLink>
     <div class="content">
       <nav class="buttons">
         <button class="btn" @click="modalController.open(modalController.id)">Lisa</button>
@@ -60,6 +59,7 @@ onMounted(async () => {
           <p class="comment-body">{{ comment['comment'] }}</p>
         </div>
       </div>
+      <RouterLink class="btn secondary" to="/">Mine tagasi</RouterLink>
     </div>
   </div>
 </template>
