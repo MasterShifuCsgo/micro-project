@@ -73,6 +73,7 @@ h1 {
   padding: 0px 3em;
     overflow-y: auto;
   height:80svh;
+  align-content: flex-start;
 }
 
 .details {

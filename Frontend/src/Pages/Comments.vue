@@ -72,6 +72,7 @@ p {
 .container {
   display: flex;
   flex-direction: column;
+  align-content: flex-start;
   justify-content: center;
   align-items: center;
 }

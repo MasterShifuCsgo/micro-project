@@ -50,12 +50,12 @@ const oppekavad = [
 
 #oppekavad {
   display: flex;
-  flex-wrap: wrap;
   justify-content: center;
+  align-content: flex-start;
+  flex-wrap: wrap;
   grid-template-columns: repeat(3, 1fr);
   gap: 20px;
   padding: 20px;
-  overflow-y: auto;
   height:80svh;
 }
 
