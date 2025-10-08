@@ -60,6 +60,7 @@ const oppekavad = [
 }
 
 #oppekavad div {
+  height: max-content;
   display: flex;
   flex-direction: column;
   justify-content: center;  

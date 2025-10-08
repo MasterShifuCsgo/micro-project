@@ -82,6 +82,7 @@ h1 {
 }
 
 .lessons {
+  height: max-content;
   border: 1px solid #ccc;
   border-radius: 8px;
   padding: 2em 3em;
