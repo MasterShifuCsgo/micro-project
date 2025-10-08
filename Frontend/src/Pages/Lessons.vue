@@ -35,6 +35,7 @@ onMounted(async () => {
 
 </script>
 <template>
+  <RouterLink class="btn secondary" to="/">Mine tagasi</RouterLink>
   <h1>
     {{ lesson_name }}
   </h1>
