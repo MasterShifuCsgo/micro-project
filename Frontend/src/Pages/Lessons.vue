@@ -34,12 +34,12 @@ onMounted(async () => {
 })
 
 </script>
-<template>
-  <RouterLink class="btn secondary" to="/">Mine tagasi</RouterLink>
+<template>  
   <h1>
     {{ lesson_name }}
   </h1>
   <div id="oppeained">
+  <RouterLink class="btn secondary" to="/">Mine tagasi</RouterLink>
     <div v-for="subject in subjects" :key="subject.name" class="lessons">
       <div class="details">
         <div class="title">

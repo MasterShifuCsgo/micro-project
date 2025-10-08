@@ -41,9 +41,10 @@ onMounted(async () => {
   The inital problem was that sending this prop would cause tech debt; i thought this component was going to get used somewhere else too, so getNewComments would be impossible to implement 
   lesson_name is a requirement by default for the API call -->
   <CommentForm ref="modalController" :lesson_name="lesson_name" :getNewComments="getNewComments" />  
-  <RouterLink class="btn secondary" to="/">Mine tagasi</RouterLink>
+  
   <div class="container">
     <h1>{{ lesson_name }}</h1>
+  <RouterLink class="btn secondary" to="/">Mine tagasi</RouterLink>
     <div class="content">
       <nav class="buttons">
         <button class="btn" @click="modalController.open(modalController.id)">Lisa</button>
