@@ -71,6 +71,8 @@ h1 {
   gap: 20px;
   justify-content: center;
   padding: 0px 3em;
+    overflow-y: auto;
+  height:80svh;
 }
 
 .details {

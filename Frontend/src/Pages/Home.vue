@@ -54,7 +54,9 @@ const oppekavad = [
   justify-content: center;
   grid-template-columns: repeat(3, 1fr);
   gap: 20px;
-  padding: 20px;  
+  padding: 20px;
+  overflow-y: auto;
+  height:80svh;
 }
 
 #oppekavad div {
