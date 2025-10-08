@@ -36,6 +36,10 @@ p,label,button, input, .btn {
   background-color: hsl(211, 91%, 47%);
 }
 
+.btn.secondary {
+  background: #004c9c;
+}
+
 .btn-disabled {
 
   background-color: #e7e7e7;

@@ -1,8 +1,9 @@
 <script setup>
-import { onMounted, provide, ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import client from '../utils/api.js';
 import Star from './components/Star.vue';
 import CommentForm from './components/CommentForm.vue';
+import { RouterLink } from 'vue-router';
 
 const { lesson_name } = defineProps({
   lesson_name: {
@@ -39,7 +40,8 @@ onMounted(async () => {
   <!-- sending getNewComments is ok. its alright because CommentForm only needs to access the current 'comments' in the Parent Component. 
   The inital problem was that sending this prop would cause tech debt; i thought this component was going to get used somewhere else too, so getNewComments would be impossible to implement 
   lesson_name is a requirement by default for the API call -->
-  <CommentForm ref="modalController" :lesson_name="lesson_name" :getNewComments="getNewComments" />
+  <CommentForm ref="modalController" :lesson_name="lesson_name" :getNewComments="getNewComments" />  
+  <RouterLink class="btn secondary" to="/">Mine tagasi</RouterLink>
   <div class="container">
     <h1>{{ lesson_name }}</h1>
     <div class="content">
