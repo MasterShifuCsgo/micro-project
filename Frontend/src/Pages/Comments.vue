@@ -59,8 +59,8 @@ onMounted(async () => {
           <p class="comment-body">{{ comment['comment'] }}</p>
         </div>
       </div>
-      <RouterLink class="btn secondary" to="/">Mine tagasi</RouterLink>
     </div>
+    <RouterLink class="btn secondary" to="/">Mine tagasi</RouterLink>
   </div>
 </template>
 
