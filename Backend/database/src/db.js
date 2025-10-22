@@ -1,7 +1,8 @@
-import Database from 'better-sqlite3'
+import Database from "bun:sqlite";
 import logError from '../../../shared/logging/logError.js'
 
-const database = new Database('./database.db', { verbose: console.log() })
+const db = new Database("data.db");
+('./database.db', { verbose: console.log() })
 
 function exportDatabase() {
   try {
@@ -22,5 +23,5 @@ function exportDatabase() {
   return database
 }
 
-const db = exportDatabase()
-export default db
+const datab = exportDatabase()
+export default datab
