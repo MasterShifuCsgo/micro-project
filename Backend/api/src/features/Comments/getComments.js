@@ -12,9 +12,8 @@ export default function getComment(req, res) {
   }
 
   try {
-    const stmt = db.prepare('SELECT * FROM comments WHERE lesson_name = ?')
-    const comment = stmt.all([name])
-    return res.status(200).send({ result: comment }) // happy path ending
+    const comments = db.query('SELECT * FROM comments WHERE lesson_name = ? ORDER BY id DESC').all(name)
+    return res.status(200).send({ result: comments })
   } catch (err) {
     logError('DATABASE', 'getComment.js', err)
     return res.status(500).send({ error: 'Andmebaas ei suutnud võtta kommentaari' })

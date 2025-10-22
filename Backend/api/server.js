@@ -1,5 +1,5 @@
 import dotenv from 'dotenv'
-dotenv.config()
+dotenv.config({path: '../../.env'})
 import express from 'express'
 import cors from 'cors'
 import CreateCommentsRoutes from './src/features/Comments/routes.js'
@@ -39,5 +39,5 @@ app
     console.log(`server running on port: ${PORT}`)
   })
   .on('error', (error) => {
-    consle.log('Failed to start server', error)
+    console.log('Failed to start server', error)
   })

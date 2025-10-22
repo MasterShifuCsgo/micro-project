@@ -6,11 +6,10 @@ import logError from '../../../../../shared/logging/logError.js'
 export default function createComment(req, res) {
   const lesson_data = req.body
 
-  //type check the object
+  // type check the object
   const { error } = LessonTypeCheck.validate(lesson_data)
-
   if (error) {
-    console.log('Sending client Error: ', error)
+    console.log('Sending client Error:', error)
     return res.status(400).send({ error })
   }
 
@@ -20,14 +19,14 @@ export default function createComment(req, res) {
   if (!isValid) {
     return res
       .status(400)
-      .send({ error: `antud tunni nimi '${lesson_name}' ei meie andmetes defineeritud tunnina` })
+      .send({ error: `antud tunni nimi '${lesson_name}' ei ole meie andmetes defineeritud tunnina` })
   }
 
   try {
-    //create the post
-    const stmt = db.prepare(`INSERT INTO comments 
-              (user_name, lesson_name, rating, comment) VALUES (?,?,?,?)`)
-    stmt.run([user_name, lesson_name, rating, comment])
+    db.query(`
+      INSERT INTO comments (user_name, lesson_name, rating, comment)
+      VALUES (?, ?, ?, ?)
+    `).run(user_name, lesson_name, rating, comment)
   } catch (err) {
     logError('DATABASE', 'createComment.js', err)
     return res.status(500).send({ error: 'Andmebaas ei suutnud tekitada kommentaari' })
