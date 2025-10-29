@@ -11,6 +11,14 @@ const hinnangud = [
   { nimetus: '', hinne: '' },
   { nimetus: 'keskmine', hinne: '4.5/5' },
 ];
+
+
+const kommentaarid = [
+  { nimetus: 'Matemaatika', kommentaarid: '13' },
+  { nimetus: 'loodusteadused', kommentaarid: '13' },
+  { nimetus: 'tehnoloogia ained', kommentaarid: '13' },
+];
+
 </script>
 
 <template>
@@ -37,14 +45,19 @@ const hinnangud = [
           <div class="oppekavade-statistika p-4">
 
             <div class="row border-bottom mb-2 pb-2 fw-bold">
-              <DashBoardItem content="Nimetus"/>
-              <DashBoardItem content="Hinnang"/>
+              <DashBoardItem content="Õppekava"/>
+              <DashBoardItem content="Kommentaarid"/>
             </div>
 
+<<<<<<< HEAD
 
             <div class="row align-items-center py-2 border-bottom" v-for="(item, i) in hinnangud" :key="i">
+=======
+            <!-- Data Rows -->
+            <div class="row align-items-center py-2 border-bottom" v-for="(item, i) in kommentaarid" :key="i">
+>>>>>>> refs/remotes/origin/master
               <DashBoardItem :content="item.nimetus"/>
-              <DashBoardItem :content="item.hinne"/>
+              <DashBoardItem :content="item.kommentaarid"/>
             </div>
           </div>
         </div>
