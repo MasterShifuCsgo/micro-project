@@ -9,6 +9,6 @@ export default function CreateCommentsRoutes() {
   routes.get('/', getComment)
   routes.get('/count', getCommentCount)
   routes.post('/', createComment)
-  router.get('/commentstats', getCommentStats)
+  routes.get('/commentstats', getCommentStats)
   return routes
 }

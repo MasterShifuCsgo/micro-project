@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../Pages/Home.vue'
 import Comments from '../Pages/Comments.vue'
 import Lessons from '../Pages/Lessons.vue'
+import Dashboard from '../Pages/Dashboard.vue'
 
 const routes = [
   { path: '/', component: Home },  
@@ -14,6 +15,10 @@ const routes = [
     path: '/comments/:lesson_name',    
     component: Comments,
     props: true,
+  },
+  {
+    path: '/dashboard',    
+    component: Dashboard,    
   },
 ]
 

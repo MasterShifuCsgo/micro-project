@@ -15,7 +15,7 @@ app.use(
 app.use(express.json())
 
 app.use((req, res, next) => {
-  const oldSend = res.send;
+  const oldSend = res.send
 
   res.send = function (body) {
     // Only log once, after Express has converted objects to JSON    
