@@ -11,19 +11,38 @@ const hinnangud = [
 
 <template>
   <div class="container d-flex align-items-center justify-content-center min-vh-100">
-    <div class="w-100 max-w-900">
+    <div class="w-100">
       <h1 class="text-center mb-4">Kommentaaride statistika</h1>
-      <div class="oppekavade-statistika p-4">
-        <!-- Header Row -->
-        <div class="row border-bottom mb-2 pb-2 fw-bold">
-          <DashBoardItem content="Nimetus"/>
-          <DashBoardItem content="Hinnang"/>
-        </div>
+      <div class="row row-cols-1 row-cols-md-2 g-4">
+        <div class="col">
+          <div class="oppekavade-statistika p-4">
+            <!-- Header Row -->
+            <div class="row border-bottom mb-2 pb-2 fw-bold">
+              <DashBoardItem content="Nimetus"/>
+              <DashBoardItem content="Hinnang"/>
+            </div>
 
-        <!-- Data Rows -->
-        <div class="row align-items-center py-2 border-bottom" v-for="(item, i) in hinnangud" :key="i">
-          <DashBoardItem :content="item.nimetus"/>
-          <DashBoardItem :content="item.hinne"/>
+            <!-- Data Rows -->
+            <div class="row align-items-center py-2 border-bottom" v-for="(item, i) in hinnangud" :key="i">
+              <DashBoardItem :content="item.nimetus"/>
+              <DashBoardItem :content="item.hinne"/>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="oppekavade-statistika p-4">
+            <!-- Header Row -->
+            <div class="row border-bottom mb-2 pb-2 fw-bold">
+              <DashBoardItem content="Nimetus"/>
+              <DashBoardItem content="Hinnang"/>
+            </div>
+
+            <!-- Data Rows -->
+            <div class="row align-items-center py-2 border-bottom" v-for="(item, i) in hinnangud" :key="i">
+              <DashBoardItem :content="item.nimetus"/>
+              <DashBoardItem :content="item.hinne"/>
+            </div>
+          </div>
         </div>
       </div>
     </div>
