@@ -7,8 +7,10 @@
     <div class="areas">
       <h1>Kommentaaride statistika</h1>
       <main>
-        <div class="oppekavade_statistika"></div>
-        <div class="kommentaaride_statistika"></div>
+        <div class="oppekavade_statistika">
+        1</div>
+        <div class="kommentaaride_statistika">
+        2</div>
       </main>
     </div>
   </div>
@@ -16,17 +18,16 @@
 </template>
 <style lang="css">
 .container {
-  display: grid;
-  justify-items: center;
-  
-}
-
-.areas {
-  grid-template-areas: "main", "main", "main";
+  display: flex;
+  flex-direction: column;
+  height: 100svh;  
+  justify-items: center;  
+  align-items: center;  
 }
 
 main {
-  grid-area: main;
+  display: flex;
+  flex-direction: row;
 }
 
 .content {
