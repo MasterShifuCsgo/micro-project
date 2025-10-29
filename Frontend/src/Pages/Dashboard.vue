@@ -8,7 +8,15 @@
       <h1>Kommentaaride statistika</h1>
       <main>
         <div class="oppekavade_statistika">
-        1</div>
+        <div>
+            <h1 >Õppekavad</h1>
+            <div>Keeled ja humanitaarteadused</div>
+            <div>Matemaatika ja loodusteadused</div>
+            <div>Praktilised- ja tehnoloogia ained</div>
+            <div>Kunsti- ja liikumisained</div>
+            <div>Sotsiaalained</div>
+          </div>
+        </div>
         <div class="kommentaaride_statistika">
         2</div>
       </main>
