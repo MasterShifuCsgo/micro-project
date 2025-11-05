@@ -1,118 +1,138 @@
-<script setup>
-import { ref } from 'vue';
-import Modal from './Modal.vue';
-import Star from './Star.vue';
-import client from '../../utils/api';
-
-const modalController = ref(null);
-
-const userName = ref(null);
-const description = ref(null);
-const rating = ref(1);
-
-const { getNewComments, lesson_name } = defineProps({
-  getNewComments: {
-    type: Function,
-    default: () => { console.error("cannot refresh comments because getNewComments wans't given.")}
-  },
-  lesson_name: {
-    type: String,
-    default: ""
-  }
-})
-
-async function submitForm() {
-  await client.post("/comment", {
-    lesson_name: lesson_name,
-    user_name: userName.value,
-    comment: description.value,
-    rating: rating.value
-  })
-  getNewComments();
-}
-
-defineExpose(modalController)
-
-</script>
 <template>
-  <Modal ref="modalController">
-    <form @submit.prevent="submitForm" class="form">
-      <div class="inputs">
-        <div class="field">
-          <label>Sinu nimi</label>
-          <input type="text" v-model="userName" required />
-        </div>
+  <div>
+    <div v-if="visible">
+      <div class="modal-backdrop fade show"></div>
 
-        <div class="field">
-          <label>Lisa Kommentaar</label>
-          <textarea rows="10" cols="45" v-model="description" required></textarea>
-        </div>
+      <div class="modal d-block" tabindex="-1" role="dialog" aria-modal="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Lisa kommentaar</h5>
+              <button type="button" class="btn-close" @click="close" aria-label="Close"></button>
+            </div>
 
-        <div class="field" style="display: flex; flex-direction: column; gap: 4px;">
-          <label>Anna Hinnang</label>
-          <div class="stars">
-            <Star style="cursor: pointer;" :size="33" v-for="i in 5" :key="i" :disabled="rating < i"
-              @click="() => { rating = i }" />
+            <form @submit.prevent="submit">
+              <div class="modal-body">
+                <div v-if="error" class="alert alert-danger small" role="alert">{{ error }}</div>
+
+                <!-- Õppeaine is fixed and not editable -->
+                <div class="mb-3">
+                  <label class="form-label">Õppeaine</label>
+                  <p class="form-control-plaintext">{{ lesson_name || '—' }}</p>
+                </div>
+
+                <div class="mb-3">
+                  <label for="cf-username" class="form-label">Sinu nimi</label>
+                  <input id="cf-username" type="text" class="form-control" v-model="form.user_name" placeholder="Sinu nimi" />
+                </div>
+
+                <div class="mb-3">
+                  <label for="cf-rating" class="form-label">Hinne</label>
+                  <select id="cf-rating" class="form-select" v-model.number="form.rating">
+                    <option v-for="n in 5" :key="n" :value="n">{{ n }}</option>
+                  </select>
+                </div>
+
+                <div class="mb-3">
+                  <label for="cf-comment" class="form-label">Kommentaar</label>
+                  <textarea id="cf-comment" class="form-control" rows="5" v-model="form.comment" placeholder="Kirjuta kommentaar..."></textarea>
+                </div>
+              </div>
+
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" @click="close" :disabled="loading">Tühista</button>
+                <button type="submit" class="btn btn-primary" :disabled="loading">
+                  <span v-if="loading" class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                  Salvesta
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       </div>
-
-      <button class="btn" type="submit" @click="modalController.close(modalController.id)">Lisa</button>
-    </form>
-  </Modal>
+    </div>
+  </div>
 </template>
 
-<style scoped>
+<script setup>
+import { ref, reactive, watch } from 'vue';
+import client from '../../utils/api.js';
 
-.form {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  margin: 2em 0em;
+const props = defineProps({
+  lesson_name: {
+    type: String,
+    default: ''
+  },
+  getNewComments: {
+    type: Function,
+    required: false
+  }
+});
+
+const visible = ref(false);
+const id = ref('comment-modal');
+const loading = ref(false);
+const error = ref(null);
+
+const form = reactive({
+  user_name: '',
+  rating: 5,
+  comment: ''
+});
+
+// keep form in sync if lesson_name prop changes (no editable name field)
+watch(() => props.lesson_name, (v) => {
+  // no action needed except ensuring value used on submit
+});
+
+function open(customId) {
+  if (customId) id.value = customId;
+  visible.value = true;
+  error.value = null;
+  // reset other fields
+  form.user_name = '';
+  form.rating = 5;
+  form.comment = '';
 }
 
-.form>.inputs {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+function close() {
+  visible.value = false;
+  error.value = null;
+  loading.value = false;
 }
 
-.form button {
-  width: min-content;
+async function submit() {
+  if (!props.lesson_name) {
+    error.value = 'Õppeaine puudub';
+    return;
+  }
+  if (!form.user_name || !form.comment) {
+    error.value = 'Palun täida kõigi väljad';
+    return;
+  }
+
+  loading.value = true;
+  error.value = null;
+
+  try {
+    await client.post('/comment', {
+      name: props.lesson_name,       // use prop, not editable field
+      user_name: form.user_name,
+      rating: form.rating,
+      comment: form.comment
+    });
+
+    if (typeof props.getNewComments === 'function') {
+      try { await props.getNewComments(); } catch(e){ /* ignore */ }
+    }
+
+    close();
+  } catch (e) {
+    error.value = e.response?.data?.message || e.message || 'Serveri viga';
+  } finally {
+    loading.value = false;
+  }
 }
 
-.form .field label {
-  display: flex;
-  flex-direction: column;
-  font-size: large;
-}
-
-.form .field>input,
-textarea {
-  border: solid 2px #2D72C2;
-  border-radius: 0px 1em 1em;
-  padding: 12px 14px;
-  font-size: larger;
-}
-
-.form .field>textarea {
-  padding: 7px 10px;  
-  width: clamp(15em, 40vw, 40em);
-  max-block-size: 6em;
-}
-
-.form .field>input {
-  max-width: 350px;
-}
-
-.form .field>label {
-  font-weight: 500;
-}
-
-.stars {
-  display: flex;
-  gap: 2px;
-
-}
-
-</style>
+defineExpose({ open, id });
+</script>

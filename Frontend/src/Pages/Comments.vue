@@ -1,3 +1,4 @@
+// ...existing code...
 <script setup>
 import { onMounted, ref } from 'vue';
 import client from '../utils/api.js';
@@ -33,99 +34,48 @@ async function fetchComments() {
 onMounted(async () => {
   await fetchComments();
 })
-
 </script>
 
 <template>
-  <!-- sending getNewComments is ok. its alright because CommentForm only needs to access the current 'comments' in the Parent Component. 
-  The inital problem was that sending this prop would cause tech debt; i thought this component was going to get used somewhere else too, so getNewComments would be impossible to implement 
-  lesson_name is a requirement by default for the API call -->
-  <CommentForm ref="modalController" :lesson_name="lesson_name" :getNewComments="getNewComments" />  
-  
-  <div class="container">
-    <h1>{{ lesson_name }}</h1>
-    <div class="content">
-      <nav class="buttons">
-        <button class="btn" @click="modalController.open(modalController.id)">Lisa</button>
-      </nav>
-      <div class="comments-list">
-        <div v-for="comment in comments" :key="comment.id" class="comment">
-          <div class="details">
-            <p class="title">{{ comment.user_name }}</p>
-            <div class="stars">
-              <Star v-for="i in 5" :key="i" :disabled="comment.rating < i" />
+  <CommentForm ref="modalController" :lesson_name="lesson_name" :getNewComments="getNewComments" />
+
+  <div class="container py-4">
+    <h1 class="mb-4">{{ lesson_name }}</h1>
+
+    <div class="mb-3 d-flex justify-content-end">
+      <button class="btn btn-primary" @click="modalController.open(modalController.id)">Lisa</button>
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+        <div v-if="comments.length === 0" class="alert alert-secondary" role="alert">
+          Pole kommentaare
+        </div>
+
+        <div v-else class="list-group">
+          <div v-for="comment in comments" :key="comment.id" class="list-group-item p-3 mb-2">
+            <div class="d-flex justify-content-between align-items-start">
+              <div class="me-3">
+                <h5 class="mb-1">{{ comment.user_name }}</h5>
+              </div>
+              <div class="d-flex align-items-center">
+                <div class="d-flex" role="img" aria-label="rating">
+                  <Star v-for="i in 5" :key="i" :disabled="comment.rating < i" />
+                </div>
+              </div>
             </div>
+            <p class="mb-0 mt-2 text-break">{{ comment['comment'] }}</p>
           </div>
-          <p class="comment-body">{{ comment['comment'] }}</p>
         </div>
       </div>
     </div>
-    <RouterLink class="btn secondary" to="/">Mine tagasi</RouterLink>
+
+    <div class="mt-4">
+      <RouterLink class="btn btn-secondary" to="/">Mine tagasi</RouterLink>
+    </div>
   </div>
 </template>
 
 <style scoped>
-p {
-  margin: 0px;
-}
-
-.container {
-  display: flex;
-  flex-direction: column;
-  align-content: flex-start;
-  justify-content: center;
-  align-items: center;
-}
-
-.buttons {
-  display: flex;
-  flex-direction: row-reverse;
-}
-
-.content {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  height: 80vh;
-  box-sizing: border-box;
-  padding: 0px 2em;
-}
-
-.comments-list {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  gap: 10px;
-  overflow-y: auto;
-}
-
-.comment {
-  display: flex;
-  flex-direction: column;
-  border: solid;
-  border-color: #2F98D9;
-  border-radius: 15px;
-  padding: 18px 22px;
-  width: 100%;
-  box-sizing: border-box;
-  gap: 10px;
-}
-
-.comment>.details {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px
-}
-
-.comment>.details>.title {
-  font-weight: bold;
-  white-space: pre;
-  font-size: 1.4em;
-}
-
-.stars {
-  display: flex;
-  gap: 2px;
-
-}
+.text-break { word-break: break-word; }
 </style>

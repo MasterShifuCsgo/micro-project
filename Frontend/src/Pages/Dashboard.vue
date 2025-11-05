@@ -49,13 +49,8 @@ const kommentaarid = [
               <DashBoardItem content="Kommentaarid"/>
             </div>
 
-<<<<<<< HEAD
 
             <div class="row align-items-center py-2 border-bottom" v-for="(item, i) in hinnangud" :key="i">
-=======
-            <!-- Data Rows -->
-            <div class="row align-items-center py-2 border-bottom" v-for="(item, i) in kommentaarid" :key="i">
->>>>>>> refs/remotes/origin/master
               <DashBoardItem :content="item.nimetus"/>
               <DashBoardItem :content="item.kommentaarid"/>
             </div>
