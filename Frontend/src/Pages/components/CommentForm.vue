@@ -1,138 +1,125 @@
-<template>
-  <div>
-    <div v-if="visible">
-      <div class="modal-backdrop fade show"></div>
-
-      <div class="modal d-block" tabindex="-1" role="dialog" aria-modal="true">
-        <div class="modal-dialog modal-dialog-centered">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">Lisa kommentaar</h5>
-              <button type="button" class="btn-close" @click="close" aria-label="Close"></button>
-            </div>
-
-            <form @submit.prevent="submit">
-              <div class="modal-body">
-                <div v-if="error" class="alert alert-danger small" role="alert">{{ error }}</div>
-
-                <!-- Õppeaine is fixed and not editable -->
-                <div class="mb-3">
-                  <label class="form-label">Õppeaine</label>
-                  <p class="form-control-plaintext">{{ lesson_name || '—' }}</p>
-                </div>
-
-                <div class="mb-3">
-                  <label for="cf-username" class="form-label">Sinu nimi</label>
-                  <input id="cf-username" type="text" class="form-control" v-model="form.user_name" placeholder="Sinu nimi" />
-                </div>
-
-                <div class="mb-3">
-                  <label for="cf-rating" class="form-label">Hinne</label>
-                  <select id="cf-rating" class="form-select" v-model.number="form.rating">
-                    <option v-for="n in 5" :key="n" :value="n">{{ n }}</option>
-                  </select>
-                </div>
-
-                <div class="mb-3">
-                  <label for="cf-comment" class="form-label">Kommentaar</label>
-                  <textarea id="cf-comment" class="form-control" rows="5" v-model="form.comment" placeholder="Kirjuta kommentaar..."></textarea>
-                </div>
-              </div>
-
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" @click="close" :disabled="loading">Tühista</button>
-                <button type="submit" class="btn btn-primary" :disabled="loading">
-                  <span v-if="loading" class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
-                  Salvesta
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</template>
-
 <script setup>
-import { ref, reactive, watch } from 'vue';
-import client from '../../utils/api.js';
+import { ref } from 'vue';
+import Modal from './Modal.vue';
+import Star from './Star.vue';
+import client from '../../utils/api';
 
-const props = defineProps({
-  lesson_name: {
-    type: String,
-    default: ''
-  },
+const modalController = ref(null);
+
+const userName = ref(null);
+const description = ref(null);
+const rating = ref(1);
+
+const { getNewComments, lesson_name } = defineProps({
   getNewComments: {
     type: Function,
-    required: false
+    default: () => { console.error("cannot refresh comments because getNewComments wans't given.")}
+  },
+  lesson_name: {
+    type: String,
+    default: ""
   }
-});
+})
 
-const visible = ref(false);
-const id = ref('comment-modal');
-const loading = ref(false);
-const error = ref(null);
+async function submitForm() {
+  await client.post("/comment", {
+    lesson_name: lesson_name,
+    user_name: userName.value,
+    comment: description.value,
+    rating: rating.value
+  })
+  getNewComments();
 
-const form = reactive({
-  user_name: '',
-  rating: 5,
-  comment: ''
-});
 
-// keep form in sync if lesson_name prop changes (no editable name field)
-watch(() => props.lesson_name, (v) => {
-  // no action needed except ensuring value used on submit
-});
-
-function open(customId) {
-  if (customId) id.value = customId;
-  visible.value = true;
-  error.value = null;
-  // reset other fields
-  form.user_name = '';
-  form.rating = 5;
-  form.comment = '';
+  userName.value = null;
+  description.value = null;
+  rating.value = 1;
 }
 
-function close() {
-  visible.value = false;
-  error.value = null;
-  loading.value = false;
-}
+defineExpose(modalController)
 
-async function submit() {
-  if (!props.lesson_name) {
-    error.value = 'Õppeaine puudub';
-    return;
-  }
-  if (!form.user_name || !form.comment) {
-    error.value = 'Palun täida kõigi väljad';
-    return;
-  }
-
-  loading.value = true;
-  error.value = null;
-
-  try {
-    await client.post('/comment', {
-      name: props.lesson_name,       // use prop, not editable field
-      user_name: form.user_name,
-      rating: form.rating,
-      comment: form.comment
-    });
-
-    if (typeof props.getNewComments === 'function') {
-      try { await props.getNewComments(); } catch(e){ /* ignore */ }
-    }
-
-    close();
-  } catch (e) {
-    error.value = e.response?.data?.message || e.message || 'Serveri viga';
-  } finally {
-    loading.value = false;
-  }
-}
-
-defineExpose({ open, id });
 </script>
+
+<template>
+  <Modal ref="modalController">
+    <div class="card mx-auto shadow-sm" role="dialog" aria-modal="true">
+      <div class="card-body p-4">
+        <h5 class="card-title mb-3">Lisa kommentaar</h5>
+
+        <form @submit.prevent="submitForm" class="needs-validation" novalidate>
+          <div class="mb-3">
+            <label for="cf-name" class="form-label">Sinu nimi</label>
+            <input id="cf-name" type="text" v-model="userName" required class="form-control" />
+          </div>
+
+          <div class="mb-3">
+            <label for="cf-comment" class="form-label">Lisa Kommentaar</label>
+            <textarea id="cf-comment" rows="6" v-model="description" required class="form-control"></textarea>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label d-block">Anna Hinnang</label>
+            <div class="stars d-flex align-items-center" role="radiogroup" aria-label="Hinnang">
+              <Star
+                v-for="i in 5"
+                :key="i"
+                :size="28"
+                :disabled="rating < i"
+                @click="() => { rating = i }"
+                :aria-checked="rating === i"
+                role="radio"
+                :title="`${i} täht`"
+              />
+            </div>
+          </div>
+
+          <div class="d-flex justify-content-end gap-2">
+            <button type="button" class="btn btn-outline-secondary" @click="modalController.close(modalController.id)">Tühista</button>
+            <button type="submit" class="btn btn-primary" @click="modalController.close(modalController.id)">Lisa</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </Modal>
+</template>
+
+<style scoped>
+
+.card {
+  width: 100%;
+
+  border-radius: 0.75rem;
+}
+
+.card-title {
+  font-weight: 600;
+}
+
+.stars {
+  gap: 0.5rem;
+}
+
+
+.stars ::v-deep svg,
+.stars ::v-deep .star {
+  cursor: pointer;
+  transition: transform 0.08s ease;
+}
+.stars ::v-deep svg:hover,
+.stars ::v-deep .star:hover {
+  transform: scale(1.05);
+}
+
+
+textarea.form-control {
+  resize: vertical;
+  min-height: 6rem;
+}
+
+
+@media (min-width: 992px) {
+  .card-body {
+    padding: 1.5rem;
+  }
+}
+</style>

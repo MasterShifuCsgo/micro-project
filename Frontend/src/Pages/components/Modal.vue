@@ -25,16 +25,12 @@ defineExpose({ id, open, close });
 </script>
 <template>
   <div class="modal" v-show="active" :id="id">
-    <div class="container">
-      <div class="top">
-        <button class="btn back" @click="() => {close(id)}">Tagasi</button>
-      </div>
+
       <div class="content">
         <slot></slot>
       </div>
-      <div class="bottom"></div>
+
     </div>
-  </div>
 </template>
 
 <style scoped>

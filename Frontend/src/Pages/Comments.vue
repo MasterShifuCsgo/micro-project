@@ -1,4 +1,3 @@
-// ...existing code...
 <script setup>
 import { onMounted, ref } from 'vue';
 import client from '../utils/api.js';
@@ -39,7 +38,8 @@ onMounted(async () => {
 <template>
   <CommentForm ref="modalController" :lesson_name="lesson_name" :getNewComments="getNewComments" />
 
-  <div class="container py-4">
+
+  <div class="container py-4 page-scrollable">
     <h1 class="mb-4">{{ lesson_name }}</h1>
 
     <div class="mb-3 d-flex justify-content-end">
@@ -78,4 +78,11 @@ onMounted(async () => {
 
 <style scoped>
 .text-break { word-break: break-word; }
+
+.page-scrollable {
+  max-height: calc(100vh - 80px);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding-right: 0.5rem;
+}
 </style>

@@ -2,15 +2,12 @@ import { Router } from 'express'
 import createComment from './createComment.js'
 import getComment from './getComments.js'
 import getCommentCount from './getCommentCount.js'
-import getCommentStats from './getCommentStats.js'
-import getDashboardStats from './getDashboardStats.js'
+
 
 export default function CreateCommentsRoutes() {
   const routes = Router()
   routes.get('/', getComment)
   routes.get('/count', getCommentCount)
   routes.post('/', createComment)
-  routes.get('/commentstats', getCommentStats)
-  routes.get('/dashboard-stats', getDashboardStats)
   return routes
 }

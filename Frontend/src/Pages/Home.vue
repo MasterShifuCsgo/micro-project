@@ -1,5 +1,4 @@
-// ...existing code...
-<script setup>
+ <script setup>
 import { RouterLink } from 'vue-router'
 
 const oppekavad = [
@@ -13,7 +12,13 @@ const oppekavad = [
 
 <template>
   <div class="container py-4">
-    <h1 class="text-center my-4">Õppekavad</h1>
+    <div class="d-flex align-items-center justify-content-between mb-4">
+      <h1 class="text-center my-0">Õppekavad</h1>
+
+      <RouterLink to="/dashboard" class="btn btn-outline-primary ms-3">
+        Dashboard
+      </RouterLink>
+    </div>
 
     <div class="row g-3 justify-content-center">
       <div
@@ -21,7 +26,7 @@ const oppekavad = [
         :key="index"
         class="col-12 col-sm-6 col-md-4 col-lg-3 d-flex"
       >
-        <!-- use only Bootstrap classes; inline min-height to keep cards equal -->
+
         <div class="card shadow-sm d-flex flex-column w-100 h-100" style="min-height:150px;">
           <div class="card-body d-flex flex-column h-100">
             <div class="mb-3 flex-grow-1 overflow-auto">
@@ -39,4 +44,3 @@ const oppekavad = [
     </div>
   </div>
 </template>
-// ...existing code...
